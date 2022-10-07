@@ -25,7 +25,7 @@ parser = ArgumentParser()
 # Hint: Large Epochs will achieve better performance.
 # Hint: Large Hidden Size will achieve better performance.
 parser.add_argument("--optimizer", default='rmsprop', type=str)
-parser.add_argument("--epochs", default=60, type=int)
+parser.add_argument("--epochs", default=20, type=int)
 parser.add_argument("--hidden_size", default=60, type=int)
 parser.add_argument("--scale_factor", default=250, type=float)
 ###########################MAGIC ENDS HERE##########################
@@ -168,11 +168,21 @@ import matplotlib.pyplot as plt
 # Visualize the confusion matrix by matplotlib and sklearn based on y_test_predict and y_test
 # Report the precision and recall for 10 different classes
 # Hint: check the precision and recall functions from sklearn package or you can implement these function by yourselves.
+cf_matrix = confusion_matrix(y_test,y_test_predict)
 
-print(confusion_matrix(y_test,y_test_predict))
+print(cf_matrix)
 print(precision_score(y_test,y_test_predict, average='macro', zero_division=1))
 print(recall_score(y_test,y_test_predict, average='macro', zero_division=1))
 
-plt.imshow(confusion_matrix(y_test,y_test_predict))
+fig, ax = plt.subplots()
+im = ax.imshow(cf_matrix, 'OrRd')
+for i in range(len(cf_matrix)):
+    for j in range(len(cf_matrix[0])):
+        text = ax.text(j, i, cf_matrix[i, j],
+                       ha="center", va="center")
+
+plt.xlabel("True Label")
+plt.ylabel("Predicted Label")
+fig.tight_layout()
 plt.show()
 ###########################MAGIC ENDS HERE##########################
