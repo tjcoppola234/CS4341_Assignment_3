@@ -24,10 +24,10 @@ parser = ArgumentParser()
 # Hint: Advanced optimizer will achieve better performance.
 # Hint: Large Epochs will achieve better performance.
 # Hint: Large Hidden Size will achieve better performance.
-parser.add_argument("--optimizer", default='sgd', type=str)
-parser.add_argument("--epochs", default=10, type=int)
-parser.add_argument("--hidden_size", default=32, type=int)
-parser.add_argument("--scale_factor", default=10, type=float)
+parser.add_argument("--optimizer", default='rmsprop', type=str)
+parser.add_argument("--epochs", default=60, type=int)
+parser.add_argument("--hidden_size", default=60, type=int)
+parser.add_argument("--scale_factor", default=250, type=float)
 ###########################MAGIC ENDS HERE##########################
 
 parser.add_argument("--is_pic_vis", action="store_true")
@@ -99,10 +99,17 @@ if args.is_pic_vis:
 ###########################MAGIC HAPPENS HERE##########################
 # Scale the data attributes 
 # Hint: Scaling the data in the range 0-1 would achieve better results.
+print(x_train[0])
+print(x_valid[0])
+print(x_test[0])
+
 x_train = x_train / args.scale_factor
 x_valid = x_valid / args.scale_factor
 x_test = x_test / args.scale_factor
 
+print(x_train[0])
+print(x_valid[0])
+print(x_test[0])
 ###########################MAGIC ENDS HERE##########################
 
 if args.is_pic_vis:
@@ -162,13 +169,10 @@ import matplotlib.pyplot as plt
 # Report the precision and recall for 10 different classes
 # Hint: check the precision and recall functions from sklearn package or you can implement these function by yourselves.
 
-###########################MAGIC ENDS HERE##########################
-
 print(confusion_matrix(y_test,y_test_predict))
-print(precision_score(y_test,y_test_predict))
-print(recall_score(y_test,y_test_predict))
+print(precision_score(y_test,y_test_predict, average='macro', zero_division=1))
+print(recall_score(y_test,y_test_predict, average='macro', zero_division=1))
 
-# fig, ax = plt.subplots()
-# im, cbar = heatmap
-# fig.tight_layout()
-# plt.show()
+plt.imshow(confusion_matrix(y_test,y_test_predict))
+plt.show()
+###########################MAGIC ENDS HERE##########################
