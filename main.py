@@ -181,8 +181,10 @@ for i in range(len(cf_matrix)):
         text = ax.text(j, i, cf_matrix[i, j],
                        ha="center", va="center")
 
-plt.xlabel("True Label")
-plt.ylabel("Predicted Label")
+ax.set_xlabel("True Label")
+ax.xaxis.set_label_position('top') 
+ax.tick_params(top=True, labeltop=True, bottom=False, labelbottom=False)
+ax.set_ylabel("Predicted Label")
 fig.tight_layout()
 plt.show()
 ###########################MAGIC ENDS HERE##########################
