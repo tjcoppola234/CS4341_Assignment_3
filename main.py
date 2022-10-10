@@ -25,9 +25,9 @@ parser = ArgumentParser()
 # Hint: Large Epochs will achieve better performance.
 # Hint: Large Hidden Size will achieve better performance.
 parser.add_argument("--optimizer", default='rmsprop', type=str)
-parser.add_argument("--epochs", default=20, type=int)
-parser.add_argument("--hidden_size", default=60, type=int)
-parser.add_argument("--scale_factor", default=250, type=float)
+parser.add_argument("--epochs", default=80, type=int)
+parser.add_argument("--hidden_size", default=90, type=int) #100 currently in doc
+parser.add_argument("--scale_factor", default=255, type=float)
 ###########################MAGIC ENDS HERE##########################
 
 parser.add_argument("--is_pic_vis", action="store_true")
@@ -129,7 +129,8 @@ model = Sequential()
 # Build up a neural network to achieve better performance.
 # Hint: Deeper networks (i.e., more hidden layers) and a different activation function may achieve better results.
 model.add(Flatten())
-model.add(Dense(args.hidden_size, activation="relu")) # first layer
+model.add(Dense(args.hidden_size, activation="elu")) # first layer
+model.add(Dense(args.hidden_size, activation="elu"))
 
 ###########################MAGIC ENDS HERE##########################
 model.add(Dense(num_labels)) # last layer
