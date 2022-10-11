@@ -24,17 +24,15 @@ parser = ArgumentParser()
 # Hint: Advanced optimizer will achieve better performance.
 # Hint: Large Epochs will achieve better performance.
 # Hint: Large Hidden Size will achieve better performance.
-parser.add_argument("--optimizer", default='rmsprop', type=str)
-parser.add_argument("--epochs", default=20, type=int)
-parser.add_argument("--hidden_size", default=60, type=int)
-parser.add_argument("--scale_factor", default=250, type=float)
+parser.add_argument("--optimizer", default='adam', type=str)
+parser.add_argument("--epochs", default=60, type=int)
+parser.add_argument("--hidden_size", default=80, type=int)
+parser.add_argument("--scale_factor", default=240, type=float)
 ###########################MAGIC ENDS HERE##########################
 
 parser.add_argument("--is_pic_vis", action="store_true")
 parser.add_argument("--model_output_path", type=str, default="./output")
 parser.add_argument("--model_nick_name", type=str, default=None)
-
-
 
 args = parser.parse_args()
 start_time = time()
@@ -99,17 +97,19 @@ if args.is_pic_vis:
 ###########################MAGIC HAPPENS HERE##########################
 # Scale the data attributes 
 # Hint: Scaling the data in the range 0-1 would achieve better results.
-print(x_train[0])
-print(x_valid[0])
-print(x_test[0])
+print(np.amax(x_train),np.amax(x_valid),np.amax(x_test))
+# print(x_train[0])
+# print(x_valid[0])
+# print(x_test[0])
 
 x_train = x_train / args.scale_factor
 x_valid = x_valid / args.scale_factor
 x_test = x_test / args.scale_factor
 
-print(x_train[0])
-print(x_valid[0])
-print(x_test[0])
+print(np.amax(x_train),np.amax(x_valid),np.amax(x_test))
+# print(x_train[0])
+# print(x_valid[0])
+# print(x_test[0])
 ###########################MAGIC ENDS HERE##########################
 
 if args.is_pic_vis:
@@ -129,7 +129,10 @@ model = Sequential()
 # Build up a neural network to achieve better performance.
 # Hint: Deeper networks (i.e., more hidden layers) and a different activation function may achieve better results.
 model.add(Flatten())
-model.add(Dense(args.hidden_size, activation="relu")) # first layer
+model.add(Dense(args.hidden_size, activation="elu")) # first layer
+model.add(Dense(args.hidden_size, activation="relu")) # second layer
+model.add(Dense(args.hidden_size, activation="selu")) # third layer
+# model.add(Dense(args.hidden_size, activation="tanh")) # fourth layer
 
 ###########################MAGIC ENDS HERE##########################
 model.add(Dense(num_labels)) # last layer
