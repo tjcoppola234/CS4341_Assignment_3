@@ -8,7 +8,8 @@ from time import time
 import os
 import random
 from sklearn.model_selection import train_test_split
-
+import ssl	
+ssl._create_default_https_context = ssl._create_unverified_context
 
 # PLS DO NOT EXCEED THIS TIME LIMIT
 MAXIMIZED_RUNNINGTIME=1000
@@ -172,10 +173,17 @@ import matplotlib.pyplot as plt
 # Report the precision and recall for 10 different classes
 # Hint: check the precision and recall functions from sklearn package or you can implement these function by yourselves.
 cf_matrix = confusion_matrix(y_test,y_test_predict)
-
 print(cf_matrix)
 print(precision_score(y_test,y_test_predict, average='macro', zero_division=1))
 print(recall_score(y_test,y_test_predict, average='macro', zero_division=1))
+
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('Model Performance')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Training Accuracy', 'Validation Accuracy'])
+plt.show()
 
 fig, ax = plt.subplots()
 im = ax.imshow(cf_matrix, 'OrRd')
